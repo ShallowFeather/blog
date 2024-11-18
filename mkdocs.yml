@@ -1,0 +1,23 @@
+site_name: ShallowFeather's Blog
+site_url: https://shallowfeather.github.io
+theme:
+  name: material
+  palette:
+    primary: black
+    accent: deep purple
+    scheme: slate  # 設定背景顏色
+  features:
+    - header.autohide
+    - announce.dismiss
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.path
+nav:
+- Home: index.md
+- Tools Usage: tools/index.md
+- WriteUp:
+    - AIS3 EOF Qual 2024: writeup/AIS3-EOF-Qual-2024-writeup.md
+    - AIS3 Pre Exam 2023: writeup/AIS3-Pre-Exam-2023-writeup.md
+    - HITCON 2023 Qual: writeup/HITCON-2023-Qual-Crazy-Arcade.md
+    - TeamT5 釣魚遊戲: writeup/TeamT5-釣魚遊戲-WriteUp.md
+    - TeamT5 camp: writeup/TeamT5-camp-writeup.md
