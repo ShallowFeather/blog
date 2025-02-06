@@ -1,0 +1,1171 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+        <link rel="canonical" href="https://shallowfeather.github.io/note/VM%20%E6%AE%BC%E5%88%86%E6%9E%90/">
+      
+      
+        <link rel="prev" href="../../tools/">
+      
+      
+        <link rel="next" href="../../writeup/AIS3-EOF-Qual-2024-writeup/">
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.44">
+    
+    
+      
+        <title>VM 殼分析 - ShallowFeather's Blog</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.0253249f.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="slate" data-md-color-primary="black" data-md-color-accent="deep-purple">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#analysis-of-virtualization-based-obfuscation" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow md-header--lifted" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="ShallowFeather&#39;s Blog" class="md-header__button md-logo" aria-label="ShallowFeather's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            ShallowFeather's Blog
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              VM 殼分析
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+    
+    
+    
+    
+      <label class="md-header__button md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+      </label>
+      <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+  
+    
+      
+<nav class="md-tabs" aria-label="Tabs" data-md-component="tabs">
+  <div class="md-grid">
+    <ul class="md-tabs__list">
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../.." class="md-tabs__link">
+        
+  
+    
+  
+  Home
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+  
+    <li class="md-tabs__item">
+      <a href="../../tools/" class="md-tabs__link">
+        
+  
+    
+  
+  Tools Usage
+
+      </a>
+    </li>
+  
+
+      
+        
+  
+  
+    
+  
+  
+    
+    
+      <li class="md-tabs__item md-tabs__item--active">
+        <a href="./" class="md-tabs__link">
+          
+  
+  Note
+
+        </a>
+      </li>
+    
+  
+
+      
+        
+  
+  
+  
+    
+    
+      <li class="md-tabs__item">
+        <a href="../../writeup/AIS3-EOF-Qual-2024-writeup/" class="md-tabs__link">
+          
+  
+  WriteUp
+
+        </a>
+      </li>
+    
+  
+
+      
+    </ul>
+  </div>
+</nav>
+    
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+  
+
+
+<nav class="md-nav md-nav--primary md-nav--lifted" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="ShallowFeather&#39;s Blog" class="md-nav__button md-logo" aria-label="ShallowFeather's Blog" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    ShallowFeather's Blog
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Home
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../tools/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Tools Usage
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+    
+      
+        
+        
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  <span class="md-ellipsis">
+    Note
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            Note
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    VM 殼分析
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  <span class="md-ellipsis">
+    VM 殼分析
+  </span>
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#virtual-machine-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Virtual Machine Basics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Virtual Machine Basics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vm-entry-exit" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM Entry / Exit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vm-dispatcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM Dispatcher
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handler-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handler Table
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      虛擬機中的資料結構
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="虛擬機中的資料結構">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#register-machine-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Register-Machine Machine
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack-based-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack-Based Machine
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      破解虛擬殼
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="破解虛擬殼">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      目標
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lab 1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      符號執行
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disassembler" class="md-nav__link">
+    <span class="md-ellipsis">
+      自製符號執行 Disassembler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自製符號執行 Disassembler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic block
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+    
+      
+      
+    
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="0">
+            
+  
+  <span class="md-ellipsis">
+    WriteUp
+  </span>
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            WriteUp
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../writeup/AIS3-EOF-Qual-2024-writeup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AIS3 EOF Qual 2024
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../writeup/AIS3-Pre-Exam-2023-writeup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    AIS3 Pre Exam 2023
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../writeup/HITCON-2023-Qual-Crazy-Arcade/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    HITCON 2023 Qual
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../writeup/TeamT5-%E9%87%A3%E9%AD%9A%E9%81%8A%E6%88%B2-WriteUp/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TeamT5 釣魚遊戲
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../writeup/TeamT5-camp-writeup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    TeamT5 camp
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../writeup/FlareOn11-Writeup/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    FlareOn11 5, 7
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#virtual-machine-basics" class="md-nav__link">
+    <span class="md-ellipsis">
+      Virtual Machine Basics
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Virtual Machine Basics">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#vm-entry-exit" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM Entry / Exit
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#vm-dispatcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      VM Dispatcher
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#handler-table" class="md-nav__link">
+    <span class="md-ellipsis">
+      Handler Table
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      虛擬機中的資料結構
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="虛擬機中的資料結構">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#register-machine-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Register-Machine Machine
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stack-based-machine" class="md-nav__link">
+    <span class="md-ellipsis">
+      Stack-Based Machine
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    <span class="md-ellipsis">
+      破解虛擬殼
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="破解虛擬殼">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    <span class="md-ellipsis">
+      目標
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#lab-1" class="md-nav__link">
+    <span class="md-ellipsis">
+      Lab 1
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    <span class="md-ellipsis">
+      符號執行
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#disassembler" class="md-nav__link">
+    <span class="md-ellipsis">
+      自製符號執行 Disassembler
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="自製符號執行 Disassembler">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    <span class="md-ellipsis">
+      流程
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#basic-block" class="md-nav__link">
+    <span class="md-ellipsis">
+      Basic block
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+<h1 id="analysis-of-virtualization-based-obfuscation">Analysis of Virtualization-based Obfuscation</h1>
+<h2 id="virtual-machine-basics">Virtual Machine Basics</h2>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image.png" /></p>
+<p>假設有此 code 且想要利用虛擬機進行防護</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%201.png" /></p>
+<p>透過把指令進行轉換可以讓他變成其他種形式，並且有另外的 instruction set</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%202.png" /></p>
+<p>最後會變成這樣，指令就已經被轉從自定義的 instruction 被轉化為對應的 bytecode 並且也無法正常 decompile</p>
+<p>而 vm_entry 正是一個重要的元件</p>
+<aside>
+💡
+
+Core Comonents
+
+- VM Entry/Exit 將程式內容從 native 的內容轉化為 virtual 的內容
+- VM Dispatcher 轉發器，進行解碼，執行以及循環
+- Handler Table instruction 指令表
+</aside>
+
+<h3 id="vm-entry-exit">VM Entry / Exit</h3>
+<ul>
+<li>Entry 會將 native 的內容(Register, flags) 輸入 VM 的內容中</li>
+<li>Exit 則是將 VM 的內容還原回 native</li>
+</ul>
+<blockquote>
+<p>Native Register 跟 Virtual Register 通常是 1:1
+</p>
+</blockquote>
+<h3 id="vm-dispatcher">VM Dispatcher</h3>
+<ol>
+<li>獲取指令並且解碼</li>
+<li>把虛擬機的 rip (vip) 往前</li>
+<li>查看 opcode 對應的 Handler Table </li>
+<li>呼叫 Handler Table 對應的指令</li>
+</ol>
+<h3 id="handler-table">Handler Table</h3>
+<ul>
+<li>Opcode 會透過 Table 指向 Function</li>
+<li>每個 Virtual instruction 都有一個 Handler</li>
+<li>Handler 會解碼指令，並且更新 VM 內容</li>
+</ul>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%203.png" /></p>
+<h2 id="_1">虛擬機中的資料結構</h2>
+<ul>
+<li>Bytecode<ul>
+<li>當中的資料主要是由 bytecode 構成 並且由 vm 去解釋各指令</li>
+</ul>
+</li>
+<li>Virtual instruction pointer<ul>
+<li>指向目前 instruction (bytecode) 的指標</li>
+<li>執行完指令後會依照 instruction 的長度增加</li>
+<li>基本上就是 rip</li>
+</ul>
+</li>
+<li>Virtual Stack Pointer<ul>
+<li>指向虛擬機中 stack 的頂端 (TOS)</li>
+<li>透過 <code>vpush</code> 和 <code>vpop</code> 來更動</li>
+</ul>
+</li>
+</ul>
+<p>舉例來說</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%204.png" /></p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%205.png" /></p>
+<ul>
+<li>RSI 就等同於 Virtual Instruction Pointer</li>
+<li>RBP 等於 VM Content</li>
+</ul>
+<p>可以看到 dispatcher 在進入 handler_table 前對 RSI++</p>
+<p>並且 vnor 中將參數從 rbp 中拿出來，並且在最後把資料再次丟回 rbp 中</p>
+<h3 id="register-machine-machine">Register-Machine Machine</h3>
+<ul>
+<li>會將參數放在 virtual register 中</li>
+<li>把結果存在 virtual register 中</li>
+</ul>
+<p>舉例來說：</p>
+<p>x = x + y + 1</p>
+<pre><code class="language-nasm">mov rax, x
+mov rbx, y
+add rax, rbx
+inc rax
+</code></pre>
+<h3 id="stack-based-machine">Stack-Based Machine</h3>
+<ul>
+<li>從 stack 中 pop 參數</li>
+<li>push 結果到 stack 中</li>
+</ul>
+<pre><code class="language-nasm">push x
+push y
+add
+push 1
+add
+</code></pre>
+<p>這樣 stack 在執行時主要是把參數放到 stack 上，並對 stack 的參數進行操作</p>
+<h2 id="_2">破解虛擬殼</h2>
+<ul>
+<li>定位 VM 的 Bytecode</li>
+<li>了解 VM 的架構以及內容</li>
+<li>逆向出他的 handler table</li>
+<li>重新架構 VM 控制流</li>
+<li>重新架構高層次的控制流</li>
+</ul>
+<h3 id="_3">目標</h3>
+<p>要更加了解 VM 的話</p>
+<ul>
+<li>確認 VM 基本的元件以及架構</li>
+<li>偵測 handler 的特徵</li>
+<li>還原 handler 邏輯</li>
+</ul>
+<h2 id="lab-1">Lab 1</h2>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%206.png" /></p>
+<p>這邊的話我是用 IDA 來進行分析</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%207.png" /></p>
+<p>首先分發器可以看最終分支的流向 loc_1207 來判定是這個地址，但是 graph 的話不太直觀，因為分成很多 block 所以開啟 text mode 可以直接看到</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%208.png" /></p>
+<p>基本上會是 到他有出現 jmp loc_1207 之前的最後一個 jump，因為最後會跳回分發器起點</p>
+<p>而 Bytecode 則是會在 <code>0x4060</code> 的位置，因爲他透過 rdx 作為 vip 來對 bytecode 進行解碼</p>
+<p>基本上只要經過 decompile 以後再將指向 vip 的變數命名為 opcode 就能夠判斷他指令的對應了。
+可以判斷出 rcx 其實就是 stack top pointer</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%209.png" /></p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2010.png" /></p>
+<p>opcode 是 0xD5</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2011.png" /></p>
+<p>這可以判斷出 他將 vip 指向的 bytecode 除去 opcode 後的 4byte 丟到 eax 中，vip+=5</p>
+<p>並且將 eax 塞到目前參數當中並讓 rcx 指向那邊，也就是執行 push rdx 除去 opcode 的4 byte 到 stack 頂端</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2012.png" /></p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2013.png" /></p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2014.png" /></p>
+<p>opcode 是 0x66</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2015.png" /></p>
+<p>他這個 handler 沒有輸入參數，可以看到直接將 vip + 1</p>
+<p>然後將 stack 頂端的值取出並讓 stack 頂端的下一個值加上剛剛取出的值
+最後把 stack pointer - 8 因為少掉了原本的那個值</p>
+<p>等於 stack[1] += stack[0] , pop</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2016.png" /></p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2017.png" /></p>
+<p>opcode 是 0xf1</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2018.png" /></p>
+<p>這次圖比較大</p>
+<p>可以看到他檢查 stack 頂端是否為 0</p>
+<p>如果是 0 就跳到 1298 如果不是就繼續執行</p>
+<p>如果是 0 就直接讓 vip + 5 也就是 opcode + 4byte</p>
+<p>如果不是 0 就把 vip + 1 也就是 opcode 除外的 4 byte 賦予給 rax 並讓 vip 指向 vip + rax + 1</p>
+<p>等於是做 基於 輸入參數 的跳躍 就是跳到 vip + rax + 1 並且由 stack 頂端決定是否跳躍</p>
+<p>最後 pop stack </p>
+<p>也就是做了 conditional branch</p>
+<h2 id="_4">符號執行</h2>
+<ul>
+<li>會將 assmebly 變成代數運行</li>
+<li>提供指令，基本區塊以及路徑的符號狀態</li>
+</ul>
+<p>→ 支援自訂的虛擬機分析</p>
+<ul>
+<li>可以填入具體值，（動態 or 動態和符號結合）</li>
+<li>動態 VM 反組譯</li>
+</ul>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2019.png" /></p>
+<p>舉例來說，他會將 assembly 轉換為右邊的形式</p>
+<p><img alt="image.png" src="../Analysis%20of%20Virtualization-based%20Obfuscation%20186dcf3403cd80e2be5ef5e103d0075a/image%2020.png" /></p>
+<p>他給的程式碼可以看到他執行 basic block register 的變化 可以看到像是 vip + 0x5 之類的</p>
+<p>這邊沒什麼重點xD</p>
+<h2 id="disassembler">自製符號執行 Disassembler</h2>
+<h3 id="_5">流程</h3>
+<ol>
+<li>製作一個符號執行引擎會自動跟蹤執行流並且每經過一個 block 就暫停一次</li>
+<li>在 vm Entry 開啟 引擎</li>
+<li>當每次停止時，去檢查他 register/memory 的變化</li>
+<li>分析該 block 並且分析完後讓他跑到時會輸出這會做什麼 並將 block 填入白名單中</li>
+<li>當 SE 觸發 VMexit 就嘗試去重建控制流</li>
+</ol>
+<h3 id="basic-block">Basic block</h3>
+<p>程式區塊他的辨別條件主要是是否有跳到其他位置為一個 block</p>
+<p>並且 block 可能會有出現分支，也就是 next block 在滿足某一條件會跳到不同位置</p>
+<p>這邊其實可以透過分析他給的code來自己讀</p>
+<p>主要是要先辨識出哪些是 handlers 判斷出來後就可以將該 basic block 丟入 disassemble 中</p>
+<p>由於我們已經知道各handlers 在幹嘛就能夠自己判斷該填什麼指令進去</p>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    <script id="__config" type="application/json">{"base": "../..", "features": ["header.autohide", "announce.dismiss", "navigation.tabs", "navigation.tabs.sticky", "navigation.path"], "search": "../../assets/javascripts/workers/search.6ce7567c.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.83f73b43.min.js"></script>
+      
+    
+  </body>
+</html>
